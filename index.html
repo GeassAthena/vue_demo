@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>demo</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div id="test">
+  <input type="button" value="run" id="btn1" @click="lang">
+  <input type="button" value="stop" id="btn2" @click="stop">
+  <form @submit.prevent="change">
+    <input type="text" name="text1" v-model="text">
+    <input type="submit">
+  </form>
+  <br>
+  <h4>{{msg}}</h4>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  let test = new Vue({
+      el: "#test",
+      data: {
+        msg: "复旦大学，我的母校~~！",
+        intervalId: null,
+        text: ""
+      },
+      methods: {
+        lang() {
+          if (this.intervalId !== null) return;
+          this.intervalId = setInterval(() => {
+            let start = this.msg.substring(0, 1);
+            let end = this.msg.substring(1);
+            this.msg = end + start;
+          }, 400)
+        },
+        stop(){
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        },
+        change(e){
+            console.log(e);
+          this.msg = this.text;
+        }
+      }
+    }
+  );
+</script>
+</body>
+</html>
